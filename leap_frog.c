@@ -20,7 +20,7 @@ void init()
    frogs = (char*)malloc(sizeof(char) * size);
    win   = (char*)malloc(sizeof(char) * size);
 
-   while((i++) < size)
+   while((++i) < size)
    {
       frogs[i]      = (i < size/2) ? frog_left : (i == size/2) ? empty_space : frog_right;
       win[size-1-i] = frogs[i];
@@ -41,7 +41,7 @@ int check()
 {
    int i;
    
-   for(i = 0; i < 7; i++)
+   for(i = 0; i < size; i++)
       if(frogs[i] != win[i])
          return 0;
          
@@ -121,7 +121,7 @@ void imprimir(int passo)
    int i;
 
    printf("%d -> ", passo);
-   for(i = 0; i < 7; i++)
+   for(i = 0; i < size; i++)
       printf("%c ", frogs[i]);
    printf("\n");
 }
