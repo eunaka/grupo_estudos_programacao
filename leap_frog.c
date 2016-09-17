@@ -116,11 +116,10 @@ void back_leap(int pulo)
    }
 }
 
-void imprimir(int passo)
+void imprimir()
 {
    int i;
 
-   printf("%d -> ", passo);
    for(i = 0; i < size; i++)
       printf("%c ", frogs[i]);
    printf("\n");
@@ -133,19 +132,23 @@ int leap_frog(int passo)
    
    
    if(check())
+   {
+      imprimir();
+      printf("numero de passos: %d\n", passo);
       return 1;
+   }
       
    for(i = 1; i <= 4; i++)
       if(leap(i))
       {
-         imprimir(passo);
+         //imprimir(passo);
          if(leap_frog(passo+1))
             return 1;
          else
          {
-            printf("> ");
+            //printf("> ");
             back_leap(i);
-            imprimir(passo);
+            //imprimir(passo);
          }
       }
             
@@ -157,6 +160,7 @@ int main()
 {
    do
    {
+      printf("Digite o numero de frogs na esquerda:  ");
       scanf("%d", &qtd);
       fflush(stdin);
    }
@@ -168,7 +172,7 @@ int main()
    init();
    imprimir(0);
 
-   if(leap_frog(1) == 1)
+   if(leap_frog(0) == 1)
       printf("resposta alcancada com sucesso\n");
    else
       printf("resposta nao encontrada\n");
