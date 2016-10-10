@@ -30,16 +30,16 @@ void has_next_reboot(list* list)
 
 int has_next(list* list)
 {
-   int r = 0;
+   int r;
    if(!list)
-      return r;
+      return NULL;
    if(!list->indice)
       if(!list->first)
-         return r;
+         return NULL;
       else
       {
          has_next_reboot(list);
-         return r;
+         return NULL;
       }
    r = list->indice->info;
    list->indice = list->indice->next;
@@ -49,7 +49,7 @@ int has_next(list* list)
 void add(int info, list* list)
 {
    node* node;
-   if(!list)
+   if(!list || !info)
       return;
    if(!(node = new_node(info)))
       return;
@@ -71,23 +71,31 @@ int get_k(unsigned int k, list* list)
    unsigned int i = -1;
    while((++i) < k)
       if(!r)
-         return 0;
+         return NULL;
       else
          r = r->next;
    
-   return !r ? 0 : r->info;
+   return !r ? NULL : r->info;
 }
 
 void del_k(unsigned int k, list* list)
 {
-   list* r = list->first;
+   list* previous = list->first;
+   list* k_node;
    unsigned int i = -1;
-   while((++i) < k)
-      if(!r)
-         return 0;
+   while((++i) < k-1)
+      if(!previous)
+         return;
       else
-         r = r->next;
+         previous = previous->next;
+         
+   k_node = previous->next;
+   if(!k_node)
+      return;
+      
+   previous->next = k_node->next;
    
+   free(k_node);
 }
 
 void del_n(unsigned int k, list* list);
@@ -116,19 +124,65 @@ void push(int info, list* list)
 
 int pop(list* list)
 {
-   node* temp;
-   unsigned info;
-   if(!list)
-      return 0;
-   temp = list->first;
-   while(temp)
-      if(temp->next 
+   int info;
+   
+   if(!list || !list->qtd)
+      return NULL;
+      
+   info = list->last->info;
+   list->last = list->last->next;
+   
+   if(list->qtd == 1)
+      list->first = list->last;
+      
+   list->qtd--;
+      
+   return info;
 }
 
-void enqueue(int info, list* list);
-int dequeue(list* list);
+void enqueue(int info, list* list)
+{
+   add(info,list);
+}
 
-void free_list(list* list);
+int dequeue(list* list)
+{
+   int r;
+   node* temp1 = NULL, temp2 = NULL;
+   
+   if(!list || !list->qtd)
+      return NULL;
+      
+   temp1 = list->last;
+      
+   while(temp1 != list->first)
+   {
+      temp2 = temp1;
+      temp1 = temp2->next;
+   }
+   
+   r = temp1->info;
+   free(temp1);
+   
+   list->first = temp2;
+}
+
+void free_list(list* list)
+{
+   node* temp1, temp2;
+   
+   if(!list)
+      return;
+   temp1 = list->last;
+   while(temp)
+   {
+      temp2 = temp1;
+      free(temp1);
+      temp1 = temp2->next;
+   }
+   
+   free(list);
+}
 
 
 

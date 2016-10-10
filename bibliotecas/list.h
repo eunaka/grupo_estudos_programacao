@@ -10,7 +10,7 @@ typedef struct node
 
 typedef struct list
 {
-   struct node *first, *last;
+   struct node *last, *first;
    unsigned int qtd;
    struct node *indice;
 } list;
