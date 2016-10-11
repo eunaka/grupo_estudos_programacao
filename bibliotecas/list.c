@@ -23,6 +23,23 @@ list* new_list()
    return list;
 }
 
+node* get_node_k(unsigned int k, list* list)
+{
+   node* r;
+   if(!list || k >= list->qtd)
+      return NULL;
+   
+   r = list->last;
+   unsigned int i = list->qtd;
+   while((i--) > k)
+      if(!r)
+         return NULL;
+      else
+         r = r->next;
+   
+   return !r ? NULL : r->info;
+}
+
 void has_next_reboot(list* list)
 {
    list->indice = list->first;
@@ -67,38 +84,44 @@ void add(int info, list* list)
 
 int get_k(unsigned int k, list* list)
 {
-   list* r = list->first;
-   unsigned int i = -1;
-   while((++i) < k)
-      if(!r)
-         return NULL;
-      else
-         r = r->next;
-   
+   node* r = get_node_k(k, list);
    return !r ? NULL : r->info;
 }
 
 void del_k(unsigned int k, list* list)
 {
-   list* previous = list->first;
-   list* k_node;
-   unsigned int i = -1;
-   while((++i) < k-1)
-      if(!previous)
-         return;
-      else
-         previous = previous->next;
-         
-   k_node = previous->next;
+   node* after;
+   node* k_node;
+   
+   after = list && list->qtd <= 1 ? get_node_k(k, list) : get_node_k(k+1, list);
+   k_node = after ? after-> next : NULL;
    if(!k_node)
       return;
       
-   previous->next = k_node->next;
-   
+   after->next = k_node->next;
+   list->first = k == 0 ? after : list->first;
+   list->qtd--;
    free(k_node);
 }
 
-void del_n(unsigned int k, list* list);
+void del_n(int n, list* list)
+{
+   node* after = list ? list->last : return;
+   node* n_node;
+   
+   while(after)
+   {
+      if(n_node->info == n)
+      {
+         n_node = after;
+         after->next = n_node->next;
+         free(node_n);
+         list->qtd--;
+         return;
+      }
+      after = after->next;
+   }
+}
 
 list* copy(list* list)
 {
