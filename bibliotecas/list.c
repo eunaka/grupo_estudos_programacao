@@ -3,17 +3,27 @@
 #include <stdlib.h>
 #include <conio.h>
 
+/*
+ * Node constructor
+ */
 node* new_node(int info)
 {
    node* node = (node*)malloc(sizeof(node));
    if(!node)
+   {
       printf("\nWrong memory!\n");
+      return NULL;
+   }
       
    node->next = NULL;
    node->info = info;
    
    return node;
 }
+
+/*
+ * List constructor
+ */
 list* new_list()
 {
    list* list = (*list)calloc(sizeof(list));
@@ -23,6 +33,9 @@ list* new_list()
    return list;
 }
 
+/*
+ * Return the reference node in k position
+ */
 node* get_node_k(unsigned int k, list* list)
 {
    node* r;
@@ -40,11 +53,17 @@ node* get_node_k(unsigned int k, list* list)
    return !r ? NULL : r->info;
 }
 
+/*
+ * Set default value of indice
+ */
 void has_next_reboot(list* list)
 {
    list->indice = list->first;
 }
 
+/*
+ * Return the value of next element if there
+ */
 int has_next(list* list)
 {
    int r;
@@ -63,6 +82,9 @@ int has_next(list* list)
    return r;
 }
 
+/*
+ * Add element in the list
+ */
 void add(int info, list* list)
 {
    node* node;
@@ -82,12 +104,18 @@ void add(int info, list* list)
    has_next_reboot(list);
 }
 
+/*
+ * Return the value of node in k position
+ */
 int get_k(unsigned int k, list* list)
 {
    node* r = get_node_k(k, list);
    return !r ? NULL : r->info;
 }
 
+/*
+ * Delete the element in k position
+ */
 void del_k(unsigned int k, list* list)
 {
    node* after;
@@ -104,6 +132,9 @@ void del_k(unsigned int k, list* list)
    free(k_node);
 }
 
+/*
+ * Delete the list's element by info
+ */
 void del_n(int n, list* list)
 {
    node* after = list ? list->last : return;
@@ -123,6 +154,9 @@ void del_n(int n, list* list)
    }
 }
 
+/*
+ * Return a list's copy
+ */
 list* copy(list* list)
 {
    list* new_l;
@@ -140,11 +174,17 @@ list* copy(list* list)
    return new_l;
 }
 
+/*
+ * Add element in the final list
+ */
 void push(int info, list* list)
 {
    add(info, list);
 }
 
+/*
+ * Remove the last element
+ */
 int pop(list* list)
 {
    int info;
@@ -163,11 +203,17 @@ int pop(list* list)
    return info;
 }
 
+/*
+ * Add element in the final list
+ */
 void enqueue(int info, list* list)
 {
    add(info,list);
 }
 
+/*
+ * Remove the first element
+ */
 int dequeue(list* list)
 {
    int r;
@@ -189,6 +235,9 @@ int dequeue(list* list)
    
    list->first = temp2;
 }
+/*
+ * Clear the list, after free list of memory
+ */
 
 void free_list(list* list)
 {
