@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include "biblioteca/list.h"
+
+
+int main()
+{
+   int** input, temp;
+   list* colors = new_list();
+   int h, l;
+   int i, j;
+   
+   scanf("%d %d", &h, &l);
+   
+   input = (int**)malloc(sizeof(int*) * h);
+   temp  = (int**)malloc(sizeof(int*) * h);
+   
+   for(j = 0; j < l; j++)
+   {
+      input[j] = (int*)malloc(sizeof(int) * l);
+      temp[j]  = (int*)malloc(sizeof(int) * l);
+   }
+      
+   
+   return 0;
+}
