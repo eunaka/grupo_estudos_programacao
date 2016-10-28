@@ -30,3 +30,10 @@ gcc -E define.cpp | indent | wc -l
 cpp define.cpp
 gcc -c define.cpp
 */
+
+// #define REPITA0(V, C) V = 0; C
+// #define REPITA1(V, C) V = 1; C; REPITA0(V, C)
+// ...
+// #define REPITA10(V,C) V = 10; C; REPITA9(V, C)
+
+// REPITA10(x, a[x] = 0;)
